@@ -15,6 +15,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action( 'init', function() {
+	/**
+	 * @param string $path
+	 *
+	 * @return array
+	 */
+	$get_deps = function( $path ) {
+		return file_exists( $path )
+			? json_decode( file_get_contents( $path ), true )
+			: [];
+	};
 
 	// Example 1.
 	wp_register_script(
@@ -39,15 +49,10 @@ add_action( 'init', function() {
 	] );
 
 	// Example 3
-	$dependencies_path = __DIR__ . '/build/example-3/index.deps.json';
-	$dependencies      = $dependencies_path
-		? json_decode( file_get_contents( $dependencies_path ), true )
-		: [];
-
 	wp_register_script(
 		'jpry-gb-workshop-3',
 		plugins_url( 'build/example-3/index.js', __FILE__ ),
-		$dependencies
+		$get_deps( __DIR__ . '/build/example-3/index.deps.json' )
 	);
 
 	register_block_type( 'jpry/workshop-ex3', [
@@ -55,18 +60,35 @@ add_action( 'init', function() {
 	] );
 
 	// Example 4
-	$dependencies_path = plugin_dir_path( __FILE__ ) . 'build/example-4/index.deps.json';
-	$dependencies      = file_exists( $dependencies_path )
-		? json_decode( file_get_contents( $dependencies_path ), true )
-		: [];
-
 	wp_register_script(
 		'jpry-gb-workshop-4',
 		plugins_url( 'build/example-4/index.js', __FILE__ ),
-		$dependencies
+		$get_deps( __DIR__ . '/build/example-4/index.deps.json' )
 	);
 
 	register_block_type( 'jpry/workshop-ex4', [
 		'editor_script' => 'jpry-gb-workshop-4',
+	] );
+
+	// Example 6
+	wp_register_script(
+		'jpry-gb-workshop-6',
+		plugins_url( 'build/example-6/index.js', __FILE__ ),
+		$get_deps( __DIR__ . '/build/example-6/index.deps.json' )
+	);
+
+	register_block_type( 'jpry/workshop-ex6', [
+		'editor_script' => 'jpry-gb-workshop-6',
+		'attributes'    => [
+			'count' => [
+				'type'    => 'number',
+				'default' => 1,
+			],
+		],
+		'render_callback' => function( $attributes ) {
+			// imagine doing something more interesting
+			$plus1 = $attributes['count'] + 1;
+			return "<h3>" . esc_html( $plus1 ) . "</h3>";
+		},
 	] );
 } );
