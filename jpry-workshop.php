@@ -15,4 +15,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action( 'init', function() {
+
+	// Example 1.
+	wp_register_script(
+		'jpry-gb-workshop-1',
+		plugins_url( 'workshop-example-1.js', __FILE__ ),
+		[ 'wp-blocks', 'wp-element' ]
+	);
+
+	register_block_type( 'jpry/workshop-ex1', [
+		'editor_script' => 'jpry-gb-workshop-1',
+	] );
 } );
