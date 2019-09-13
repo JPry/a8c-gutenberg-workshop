@@ -26,4 +26,15 @@ add_action( 'init', function() {
 	register_block_type( 'jpry/workshop-ex1', [
 		'editor_script' => 'jpry-gb-workshop-1',
 	] );
+
+	// Example 2.
+	wp_register_script(
+		'jpry-gb-workshop-2',
+		plugins_url( 'workshop-example-2.js', __FILE__ ),
+		[ 'wp-blocks', 'wp-element', 'wp-editor' ]
+	);
+
+	register_block_type( 'jpry/workshop-ex2', [
+		'editor_script' => 'jpry-gb-workshop-2',
+	] );
 } );
