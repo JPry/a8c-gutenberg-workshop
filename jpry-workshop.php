@@ -39,14 +39,14 @@ add_action( 'init', function() {
 	] );
 
 	// Example 3
-	$dependencies_path = __DIR__ . '/build/index.deps.json';
+	$dependencies_path = __DIR__ . '/build/example-3/index.deps.json';
 	$dependencies      = $dependencies_path
 		? json_decode( file_get_contents( $dependencies_path ), true )
 		: [];
 
 	wp_register_script(
 		'jpry-gb-workshop-3',
-		plugins_url( 'build/index.js', __FILE__ ),
+		plugins_url( 'build/example-3/index.js', __FILE__ ),
 		$dependencies
 	);
 
