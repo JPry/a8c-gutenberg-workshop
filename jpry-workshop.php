@@ -37,4 +37,20 @@ add_action( 'init', function() {
 	register_block_type( 'jpry/workshop-ex2', [
 		'editor_script' => 'jpry-gb-workshop-2',
 	] );
+
+	// Example 3
+	$dependencies_path = __DIR__ . '/build/index.deps.json';
+	$dependencies      = $dependencies_path
+		? json_decode( file_get_contents( $dependencies_path ), true )
+		: [];
+
+	wp_register_script(
+		'jpry-gb-workshop-3',
+		plugins_url( 'build/index.js', __FILE__ ),
+		$dependencies
+	);
+
+	register_block_type( 'jpry/workshop-ex3', [
+		'editor_script' => 'jpry-gb-workshop-3',
+	] );
 } );
